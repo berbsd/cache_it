@@ -1,17 +1,17 @@
 name: cache
 description: A simple object cache implementation
-version: 0.0.1
+version: 0.0.2
 author: berbsd
 homepage: https://github.com/berbsd/flutter-cache
 repository: https://github.com/berbsd/flutter-cache.git
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0"
+  # flutter: ">=1.17.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+  # flutter:
+  #   sdk: flutter
   uuid: ^2.2.2
 
 dev_dependencies:
