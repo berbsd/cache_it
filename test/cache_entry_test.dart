@@ -1,4 +1,4 @@
-import 'package:cache/cache.dart';
+import 'package:cache_it/cache_it.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

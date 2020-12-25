@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
 
-import 'package:cache/cache.dart';
+import 'package:cache_it/cache_it.dart';
 
 import 'airline.dart';
 import 'api_provider.dart';
@@ -9,7 +9,7 @@ class Repository {
   final ApiProvider apiProvider = ApiProvider();
 
   // simple cache that contains individual airlines info
-  final _cachedAirlines = Cache<int, Airline>();
+  final _cachedAirlines = CacheIt<int, Airline>();
 
   // fetch the complete list of airlines
   Future<List<Airline>> fetchAirlines() async {

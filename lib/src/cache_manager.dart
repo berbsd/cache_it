@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
-import 'package:cache/cache.dart';
+import 'package:cache_it/cache_it.dart';
 
-import 'cache.dart';
+import 'cache_it.dart';
 
 ///
 /// Simple cache manager
@@ -32,7 +32,7 @@ class CacheManager {
   /// Add a new cache to manage
   ///
   void add(dynamic cache) {
-    if (cache is Cache) {
+    if (cache is CacheIt) {
       if (_cacheMap.containsKey(cache.id)) {
         // should not happen
         throw const DuplicateEntryException();
@@ -49,7 +49,7 @@ class CacheManager {
   ///
   void prune() {
     for (final dynamic element in _cacheMap.values) {
-      if (element is Cache) {
+      if (element is CacheIt) {
         element.prune();
       }
     }
@@ -60,7 +60,7 @@ class CacheManager {
   ///
   void clear() {
     for (final dynamic element in _cacheMap.values) {
-      if (element is Cache) {
+      if (element is CacheIt) {
         element.clear();
       }
     }

@@ -1,3 +1,6 @@
+## [0.0.3]
+
+* renamed package to cache_it to be less generic
 
 ## [0.0.2]
 

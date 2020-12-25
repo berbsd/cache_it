@@ -10,5 +10,5 @@ dev_dependencies:
 
 dependencies:
   http: ^0.12.2
-  cache:
+  cache_it:
     path: ../../cache

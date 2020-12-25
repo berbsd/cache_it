@@ -1,4 +1,4 @@
-import 'package:cache/cache.dart';
+import 'package:cache_it/cache_it.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -8,14 +8,14 @@ void main() {
   test('should prune expired values', () async {
     final CacheManager cacheManager = CacheManager();
 
-    final Cache<int, String> cache1 = Cache<int, String>(ttl: 2);
+    final CacheIt<int, String> cache1 = CacheIt<int, String>(ttl: 2);
     cacheManager.add(cache1);
 
     cache1.add(1, 'string 1');
     cache1.add(2, 'string 2');
     expect(cache1.length, 2);
 
-    final Cache<String, int> cache2 = Cache<String, int>(ttl: 2);
+    final CacheIt<String, int> cache2 = CacheIt<String, int>(ttl: 2);
     cacheManager.add(cache2);
 
     cache2.add('string 1', 1);
@@ -32,7 +32,7 @@ void main() {
   test('should prevent duplicate caches', () async {
     final CacheManager cacheManager = CacheManager();
 
-    final Cache<int, String> cache1 = Cache<int, String>(ttl: 0);
+    final CacheIt<int, String> cache1 = CacheIt<int, String>(ttl: 0);
     cacheManager.add(cache1);
     cache1.add(1, 'string 1');
 
