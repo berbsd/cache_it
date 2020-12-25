@@ -5,11 +5,13 @@ import 'package:uuid/uuid.dart';
 import 'cache_entry.dart';
 
 ///
-///
+/// Create an instance of a cache object.
 ///
 class CacheIt<K, V> {
   ///
-  /// default contructor. Takes an optional [ttl] paramter
+  /// Creates a new CacheIt object. The constructor takes an optional
+  /// [ttl] paramter to set time-to-live for entries in seconds. The default
+  /// is 3600 seconds or one hour.
   ///
   CacheIt({int ttl}) : _ttl = ttl?.abs() ?? 3600;
 
@@ -48,18 +50,18 @@ class CacheIt<K, V> {
   void prune() => _cache.removeWhere((K key, CacheEntry<V> value) => value.hasExpired);
 
   ///
-  /// retrieve ttl for this particular cache.
+  /// Retrieve [ttl] for this particular cache.
   ///
   int get ttl => _ttl;
 
   ///
-  /// set the cache default ttl for entries.
-  ///
+  /// Set the default ttl for the cache object. Changing the value only
+  /// impacts new entries.
   ///
   set ttl(int value) => _ttl = value?.abs() ?? 3600;
 
   ///
-  /// Returns the number of cache entries
+  /// Returns the number cached entries, whether expired or not.
   ///
   int get length => _cache.length;
 
