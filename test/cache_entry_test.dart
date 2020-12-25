@@ -13,7 +13,7 @@ void main() {
   test('should return valid cache', () {
     final CacheEntry<int> entry = CacheEntry<int>(5);
     expect(entry.hasExpired, isFalse);
-    expect(entry.entry == 5, isTrue);
+    expect(entry.data == 5, isTrue);
     expect(entry.hasExpired, isFalse);
     expect(entry.expiresIn >= 3599, isTrue);
   });

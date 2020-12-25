@@ -13,20 +13,20 @@ void main() {
 
     cache1.add(1, 'string 1');
     cache1.add(2, 'string 2');
-    expect(cache1.entries, 2);
+    expect(cache1.length, 2);
 
     final Cache<String, int> cache2 = Cache<String, int>(ttl: 2);
     cacheManager.add(cache2);
 
     cache2.add('string 1', 1);
     cache2.add('string 2', 2);
-    expect(cache1.entries, 2);
+    expect(cache1.length, 2);
 
     await Future<void>.delayed(const Duration(seconds: 3));
 
     cacheManager.prune();
-    expect(cache1.entries, 0);
-    expect(cache2.entries, 0);
+    expect(cache1.length, 0);
+    expect(cache2.length, 0);
   });
 
   test('should prevent duplicate caches', () async {

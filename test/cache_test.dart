@@ -21,9 +21,9 @@ void main() {
     await Future<void>.delayed(const Duration(seconds: 3));
     expect(cache.get(1), isNull);
     expect(cache.get(2), isNull);
-    expect(cache.entries == 2, isTrue);
+    expect(cache.length == 2, isTrue);
     cache.prune();
-    expect(cache.entries == 0, isTrue);
+    expect(cache.length == 0, isTrue);
     expect(cache.get(1), isNull);
   });
 
@@ -32,9 +32,9 @@ void main() {
 
     cache.add(1, 'first string');
     cache.add(2, 'second string');
-    expect(cache.entries == 2, isTrue);
+    expect(cache.length == 2, isTrue);
     cache.clear();
-    expect(cache.entries == 0, isTrue);
+    expect(cache.length == 0, isTrue);
     expect(cache.get(1), isNull);
   });
 
@@ -59,5 +59,22 @@ void main() {
     cache.ttl = 0;
     cache.add(1, 'value 1');
     expect(cache.get(1) == null, isTrue);
+  });
+
+  test('should return a valid list of entries', () async {
+    final Cache<int, String> cache = Cache<int, String>();
+
+    for (int i = 0; i < 10; i++) {
+      cache.add(i, 'value $i');
+    }
+
+    expect(cache.length == 10, isTrue);
+
+    for (final String entry in cache.entries) {
+      expect(entry != null, isTrue);
+    }
+
+    final List<String> values = cache.entries.toList();
+    expect(values.length == 10, isTrue);
   });
 }

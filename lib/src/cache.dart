@@ -25,7 +25,7 @@ class Cache<K, V> {
   ///
   /// Returns null if the entry does not exist or has expired.
   ///
-  V get(K key) => _cache[key]?.entry;
+  V get(K key) => _cache[key]?.data;
 
   ///
   /// Add new [key] and [value] entry to the cache.
@@ -61,5 +61,18 @@ class Cache<K, V> {
   ///
   /// Returns the number of cache entries
   ///
-  int get entries => _cache.length;
+  int get length => _cache.length;
+
+  ///
+  ///
+  ///
+  // V get entries => _cache.entries.map((entry) => entry.value);
+
+  Iterable<V> get entries {
+    final List<V> values = _cache.entries.map((MapEntry<K, CacheEntry<V>> entry) {
+      return entry.value.data;
+    }).toList();
+
+    return values;
+  }
 }

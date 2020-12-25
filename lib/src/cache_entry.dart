@@ -20,10 +20,10 @@ class CacheEntry<T> {
   ///
   ///
   ///
-  T get entry => hasExpired ? null : _data;
+  T get data => hasExpired ? null : _data;
 
   @override
-  String toString() => 'ExpiresIn $expiresIn,  hasValue ${entry != null}';
+  String toString() => 'ExpiresIn $expiresIn,  hasValue ${data != null}';
 
   ///
   ///
