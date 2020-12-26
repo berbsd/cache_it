@@ -33,7 +33,8 @@ class CacheIt<K, V> {
   /// Add new [key] and [value] entry to the cache.
   ///
   ///
-  void add(K key, V value) => _cache.putIfAbsent(key, () => CacheEntry<V>(value, ttl: ttl));
+  void add(K key, V value) => _cache.update(key, (CacheEntry<V> oldValue) => CacheEntry<V>(value, ttl: ttl),
+      ifAbsent: () => CacheEntry<V>(value, ttl: ttl));
 
   ///
   /// Removes all entries from the cache.
@@ -71,10 +72,20 @@ class CacheIt<K, V> {
   // V get entries => _cache.entries.map((entry) => entry.value);
 
   Iterable<V> get entries {
-    final List<V> values = _cache.entries.map((MapEntry<K, CacheEntry<V>> entry) {
-      return entry.value.data;
-    }).toList();
+    final List<V> values = List<V>.empty(growable: true);
+
+    for (final MapEntry<K, CacheEntry<V>> value in _cache.entries) {
+      if (!value.value.hasExpired) {
+        values.add(value.value.data);
+      }
+    }
 
     return values;
   }
+
+  @override
+  String toString() => _cache.entries
+      .map((MapEntry<K, CacheEntry<V>> value) => 'key: ${value.key}, value: ${value.value}')
+      .toList()
+      .join('\n');
 }

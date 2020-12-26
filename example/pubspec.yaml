@@ -9,6 +9,6 @@ dev_dependencies:
   test: ^1.14.4
 
 dependencies:
-  http: ^0.12.2
   cache_it:
-    path: ../../cache
+    path: ../
+  http: ^0.12.2

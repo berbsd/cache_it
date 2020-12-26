@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:cache_it/cache_it.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -61,7 +63,7 @@ void main() {
     expect(cache.get(1) == null, isTrue);
   });
 
-  test('should return a valid list of entries', () async {
+  test('should upgrade the value and reset expiration', () async {
     final CacheIt<int, String> cache = CacheIt<int, String>();
 
     for (int i = 0; i < 10; i++) {
@@ -74,7 +76,13 @@ void main() {
       expect(entry != null, isTrue);
     }
 
+    developer.log(cache.toString());
+    await Future<void>.delayed(const Duration(seconds: 5));
+    cache.add(1, 'value A');
+
     final List<String> values = cache.entries.toList();
-    expect(values.length == 10, isTrue);
+    developer.log(cache.toString());
+
+    expect(cache.get(1) == 'value A', isTrue);
   });
 }
