@@ -32,9 +32,9 @@ class Repository {
     return airlines;
   }
 
-  Future<Airline> fetchAirline(int id) async {
+  Future<Airline?> fetchAirline(int id) async {
     // check if the specific airline is cached already
-    Airline airline = _cachedAirlines.get(id);
+    Airline? airline = _cachedAirlines.get(id);
     if (airline != null) {
       developer.log('loading $id from cache');
       return airline;
@@ -43,7 +43,9 @@ class Repository {
     developer.log('fetch airline ($id) data online');
 
     airline = await apiProvider.fetchAirlineById(id);
-    _cachedAirlines.add(airline.id, airline);
+    if (airline != null) {
+      _cachedAirlines.add(airline.id, airline);
+    }
     return airline;
   }
 

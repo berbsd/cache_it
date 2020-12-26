@@ -1,18 +1,16 @@
 class Airline {
   const Airline({
-    this.id,
-    this.name,
-    this.country,
-    this.logo,
-    this.slogan,
-    this.headquarters,
-    this.website,
-    this.established,
+    required this.id,
+    required this.name,
+    required this.country,
+    required this.logo,
+    required this.slogan,
+    required this.headquarters,
+    required this.website,
+    required this.established,
   });
 
   factory Airline.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return Airline(
       id: map['id'] ?? 0,
       name: map['name'] ?? '',
