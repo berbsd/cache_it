@@ -1,8 +1,8 @@
 import 'package:cache_it/cache_it.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
-  CacheManager cacheManager;
+  CacheManager? cacheManager;
 
   setUpAll(() => cacheManager = CacheManager());
   test('should prune expired values', () async {
@@ -36,9 +36,9 @@ void main() {
     cacheManager.add(cache1);
     cache1.add(1, 'string 1');
 
-    expect(() => cacheManager.add(cache1), throwsA(isInstanceOf<DuplicateEntryException>()));
+    expect(() => cacheManager.add(cache1), throwsA(isA<DuplicateEntryException>()));
     expect(cache1.get(1), isNull);
   });
 
-  tearDownAll(() => cacheManager.dispose());
+  tearDownAll(() => cacheManager?.dispose());
 }

@@ -1,5 +1,5 @@
 import 'package:cache_it/cache_it.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('adds one to input values', () async {
@@ -43,9 +43,6 @@ void main() {
 
     expect(cache.ttl == 2, isTrue);
 
-    cache.ttl = null;
-    expect(cache.ttl == 3600, isTrue);
-
     cache.ttl = 0;
     expect(cache.ttl == 0, isTrue);
 
@@ -70,11 +67,40 @@ void main() {
 
     expect(cache.length == 10, isTrue);
 
-    for (final String entry in cache.entries) {
-      expect(entry != null, isTrue);
+    final List<String?> values = cache.entries.toList();
+    expect(values.length == 10, isTrue);
+  });
+
+  test('should return a valid list of entries', () async {
+    final CacheIt<int, String> cache = CacheIt<int, String>(ttl: 2);
+
+    for (int i = 0; i < 10; i++) {
+      cache.add(i, 'value $i');
     }
 
-    final List<String> values = cache.entries.toList();
-    expect(values.length == 10, isTrue);
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    expect(cache.length == 10, isTrue);
+
+    final List<String> values1 = cache.entries.toList();
+    expect(values1, isEmpty);
+    cache.add(50, 'value 50');
+    final List<String> values2 = cache.entries.toList();
+
+    expect(values2.length == 1, isTrue);
+  });
+
+  test('should prevent adding a duplicate entry', () async {
+    final CacheIt<int, String> cache = CacheIt<int, String>();
+
+    for (int i = 0; i < 10; i++) {
+      cache.add(i, 'value $i');
+    }
+
+    expect(cache.length == 10, isTrue);
+
+    cache.add(1, 'value 1');
+
+    expect(cache.length == 10, isTrue);
   });
 }
