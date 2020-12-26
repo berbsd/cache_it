@@ -19,7 +19,7 @@ class CacheEntry<T> {
   T? get data => hasExpired ? null : _data;
 
   @override
-  String toString() => 'ExpiresIn $expiresIn,  hasValue $data';
+  String toString() => 'Expires in: $expiresIn, value: $data';
 
   /// Returns the number of seconds before the entry expires, zero if expired.
   int get expiresIn => math.max<int>(0, _expiresAt.difference(DateTime.now().toUtc()).inSeconds);

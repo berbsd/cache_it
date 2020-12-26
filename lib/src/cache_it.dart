@@ -71,10 +71,11 @@ class CacheIt<K, V> {
     }
 
     return values;
-    // return _cache.entries.map((MapEntry<K, CacheEntry<V>> entry) {
-    //     if (entry.value.data != null) {
-    //       return entry.value.data;
-    //     }
-    //   }).toList();
   }
+
+  @override
+  String toString() => _cache.entries
+      .map((MapEntry<K, CacheEntry<V>> value) => 'key: ${value.key}, value: ${value.value}')
+      .toList()
+      .join('\n');
 }
