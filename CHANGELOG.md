@@ -1,4 +1,4 @@
-## [0.0.3]
+## [0.0.4]
 
 * Fixed issue where returning entries would include null values 
 * Fixed issue with updating  values with same keys
