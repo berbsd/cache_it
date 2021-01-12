@@ -80,9 +80,83 @@ void main() {
     await Future<void>.delayed(const Duration(seconds: 5));
     cache.add(1, 'value A');
 
-    final List<String> values = cache.entries.toList();
     developer.log(cache.toString());
 
     expect(cache.get(1) == 'value A', isTrue);
+  });
+
+  test('validate getOrUpdate function with sync functions', () async {
+    final CacheIt<int, String> cache = CacheIt<int, String>(ttl: 3);
+
+    const String initialValue = 'initial value';
+
+    cache.add(1, initialValue);
+
+    final String value1 = await cache.getOrUpdate(
+      1,
+      () async => 'random ${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
+    );
+
+    // should return the same initial value.
+    expect(value1 == initialValue, isTrue);
+
+    // leaving the cache to expire
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    final String value2 = await cache.getOrUpdate(
+      1,
+      () async => '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
+    );
+
+    expect(value2, isNotNull);
+    expect(value2 != 'initial value', isTrue);
+
+    final String value3 = await cache.getOrUpdate(
+      2,
+      () async => '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
+    );
+    final String value4 = await cache.getOrUpdate(
+      2,
+      () async => '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
+    );
+
+    expect(value3, isNotNull);
+    expect(value4, isNotNull);
+    expect(value3 == value4, isTrue);
+  });
+
+  test('validate getOrUpdate function with async functions', () async {
+    final CacheIt<int, String> cache = CacheIt<int, String>(ttl: 3);
+
+    Future<String> builder() {
+      return Future<String>.delayed(
+        const Duration(seconds: 1),
+        () => 'random ${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
+      );
+    }
+
+    const String initialValue = 'initial value';
+
+    cache.add(1, initialValue);
+
+    final String value1 = await cache.getOrUpdate(1, builder);
+
+    // should return the same initial value.
+    expect(value1 == initialValue, isTrue);
+
+    // leaving the cache to expire
+    await Future<void>.delayed(const Duration(seconds: 3));
+
+    final String value2 = await cache.getOrUpdate(1, builder);
+
+    expect(value2, isNotNull);
+    expect(value2 != 'initial value', isTrue);
+
+    final String value3 = await cache.getOrUpdate(2, builder);
+    final String value4 = await cache.getOrUpdate(2, builder);
+
+    expect(value3, isNotNull);
+    expect(value4, isNotNull);
+    expect(value3 == value4, isTrue);
   });
 }

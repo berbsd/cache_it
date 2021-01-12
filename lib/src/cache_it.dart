@@ -4,6 +4,8 @@ import 'package:uuid/uuid.dart';
 
 import 'cache_entry.dart';
 
+typedef CacheBuilderFn<V> = Future<V> Function();
+
 ///
 /// Create an instance of a cache object.
 ///
@@ -13,7 +15,7 @@ class CacheIt<K, V> {
   /// [ttl] paramter to set time-to-live for entries in seconds. The default
   /// is 3600 seconds or one hour.
   ///
-  CacheIt({int ttl}) : _ttl = ttl?.abs() ?? 3600;
+  CacheIt({int ttl}) : _ttl = ttl?.abs() ?? 600;
 
   final HashMap<K, CacheEntry<V>> _cache = HashMap<K, CacheEntry<V>>();
 
@@ -30,11 +32,22 @@ class CacheIt<K, V> {
   V get(K key) => _cache[key]?.data;
 
   ///
+  /// Retrieve cache value associated with [key].
+  ///
+  /// In case the value is expired, cache new value from builder and return it.
+  ///
+  Future<V> getOrUpdate(K key, CacheBuilderFn<V> builder) async {
+    return get(key) ?? add(key, await builder());
+  }
+
+  ///
   /// Add new [key] and [value] entry to the cache.
   ///
   ///
-  void add(K key, V value) => _cache.update(key, (CacheEntry<V> oldValue) => CacheEntry<V>(value, ttl: ttl),
-      ifAbsent: () => CacheEntry<V>(value, ttl: ttl));
+  V add(K key, V value) => _cache
+      .update(key, (CacheEntry<V> oldValue) => CacheEntry<V>(value, ttl: ttl),
+          ifAbsent: () => CacheEntry<V>(value, ttl: ttl))
+      .data;
 
   ///
   /// Removes all entries from the cache.

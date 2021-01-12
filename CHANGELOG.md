@@ -1,3 +1,9 @@
+## [0.0.5]
+
+* Updated add function to returned the cache value
+* Added a new getOrUpdate function to combine getting and updating cache 
+* Changed default ttl to 10 minutes
+
 ## [0.0.4]
 
 * Fixed issue where returning entries would include null values 

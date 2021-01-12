@@ -24,10 +24,25 @@ class ActivityRepository {
 
   Activity getActivityById(int id) async {
     // retrieving a cached value, returns null if absent or expired
+    return _cache.getOrUpdate(id, builder: () => await http.get('$url/$id'));
+}
+```
+
+Other example
+
+```dart
+import 'package:cache_it/cache_it.dart';
+
+class ActivityRepository {
+  // instantiate a cache with 10 min ttl for objects
+  final CacheIt<int, Activity> _cache = CacheIt<int, Activity>(ttl: 600);
+
+  Activity getActivityById(int id) async {
+    // retrieving a cached value, returns null if absent or expired
     Activity activity = _cache.get(id);
     if(activity == null) {
       // fetch a new value from API
-      activity = http.get('$url/$id');
+      activity = await http.get('$url/$id');
       // cache the newly retrieved value
       _cache.add(id, activity);
     }
@@ -35,4 +50,5 @@ class ActivityRepository {
   }
 }
 ```
+
 
