@@ -1,6 +1,6 @@
 name: cache_it
 description: A simple object cache implementation
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/berbsd/flutter-cache
 repository: https://github.com/berbsd/flutter-cache.git
 
