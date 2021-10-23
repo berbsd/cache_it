@@ -1,19 +1,19 @@
 name: cache_it
 description: A simple object cache implementation
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/berbsd/flutter-cache
 repository: https://github.com/berbsd/flutter-cache.git
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  uuid: ^2.2.2
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: ^1.3.1
+  lint: ^1.7.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

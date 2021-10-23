@@ -1,3 +1,7 @@
+## [0.0.6]
+
+* Updated for null safety
+
 ## [0.0.5]
 
 * Updated add function to returned the cache value

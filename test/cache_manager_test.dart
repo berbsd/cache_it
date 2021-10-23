@@ -2,7 +2,7 @@ import 'package:cache_it/cache_it.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  CacheManager cacheManager;
+  late CacheManager cacheManager;
 
   setUpAll(() => cacheManager = CacheManager());
   test('should prune expired values', () async {

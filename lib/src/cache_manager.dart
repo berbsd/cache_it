@@ -5,13 +5,9 @@ import 'package:cache_it/cache_it.dart';
 
 import 'cache_it.dart';
 
-///
 /// Simple cache manager
-///
 class CacheManager {
-  ///
   /// Retrieve singleton instance of cache manager
-  ///
   factory CacheManager() => _instance;
 
   CacheManager._() : _cacheMap = <String, dynamic>{} {
@@ -21,16 +17,14 @@ class CacheManager {
   static final CacheManager _instance = CacheManager._();
 
   final Map<String, dynamic> _cacheMap;
-  Timer _ticker;
+  late Timer _ticker;
 
   void _handleTicker(Timer t) {
     developer.log('start pruning');
     prune();
   }
 
-  ///
   /// Add a new cache to manage
-  ///
   void add(dynamic cache) {
     if (cache is CacheIt) {
       if (_cacheMap.containsKey(cache.id)) {
@@ -44,9 +38,7 @@ class CacheManager {
     }
   }
 
-  ///
   /// Eliminate all expired  values across caches
-  ///
   void prune() {
     for (final dynamic element in _cacheMap.values) {
       if (element is CacheIt) {
@@ -55,9 +47,7 @@ class CacheManager {
     }
   }
 
-  ///
   /// clear all caches managed by the configuration manager
-  ///
   void clear() {
     for (final dynamic element in _cacheMap.values) {
       if (element is CacheIt) {
@@ -66,9 +56,7 @@ class CacheManager {
     }
   }
 
-  ///
-  /// cancel the periodic timer and dispose of resources.
-  ///
+  /// Cancel the periodic timer and dispose of resources.
   void dispose() {
     _ticker.cancel();
     clear();

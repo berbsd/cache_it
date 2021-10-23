@@ -1,7 +1,7 @@
 /// Abstract exception class for [CacheIt]
 abstract class CacheException implements Exception {
   /// Default constructor. Takes an optional message string.
-  const CacheException([this._message]);
+  const CacheException([this._message = '']);
 
   final String _message;
 

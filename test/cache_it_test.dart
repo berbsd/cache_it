@@ -45,9 +45,6 @@ void main() {
 
     expect(cache.ttl == 2, isTrue);
 
-    cache.ttl = null;
-    expect(cache.ttl == 3600, isTrue);
-
     cache.ttl = 0;
     expect(cache.ttl == 0, isTrue);
 
@@ -72,7 +69,7 @@ void main() {
 
     expect(cache.length == 10, isTrue);
 
-    for (final String entry in cache.entries) {
+    for (final String? entry in cache.entries) {
       expect(entry != null, isTrue);
     }
 
@@ -92,7 +89,7 @@ void main() {
 
     cache.add(1, initialValue);
 
-    final String value1 = await cache.getOrUpdate(
+    final String? value1 = await cache.getOrUpdate(
       1,
       () async => 'random ${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
     );
@@ -103,7 +100,7 @@ void main() {
     // leaving the cache to expire
     await Future<void>.delayed(const Duration(seconds: 3));
 
-    final String value2 = await cache.getOrUpdate(
+    final String? value2 = await cache.getOrUpdate(
       1,
       () async => '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
     );
@@ -111,11 +108,11 @@ void main() {
     expect(value2, isNotNull);
     expect(value2 != 'initial value', isTrue);
 
-    final String value3 = await cache.getOrUpdate(
+    final String? value3 = await cache.getOrUpdate(
       2,
       () async => '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
     );
-    final String value4 = await cache.getOrUpdate(
+    final String? value4 = await cache.getOrUpdate(
       2,
       () async => '${DateTime.now().millisecondsSinceEpoch ~/ 1000}',
     );
@@ -139,7 +136,7 @@ void main() {
 
     cache.add(1, initialValue);
 
-    final String value1 = await cache.getOrUpdate(1, builder);
+    final String? value1 = await cache.getOrUpdate(1, builder);
 
     // should return the same initial value.
     expect(value1 == initialValue, isTrue);
@@ -147,13 +144,13 @@ void main() {
     // leaving the cache to expire
     await Future<void>.delayed(const Duration(seconds: 3));
 
-    final String value2 = await cache.getOrUpdate(1, builder);
+    final String? value2 = await cache.getOrUpdate(1, builder);
 
     expect(value2, isNotNull);
     expect(value2 != 'initial value', isTrue);
 
-    final String value3 = await cache.getOrUpdate(2, builder);
-    final String value4 = await cache.getOrUpdate(2, builder);
+    final String? value3 = await cache.getOrUpdate(2, builder);
+    final String? value4 = await cache.getOrUpdate(2, builder);
 
     expect(value3, isNotNull);
     expect(value4, isNotNull);
